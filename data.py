@@ -1,12 +1,12 @@
 def get_student_grades():
     """Gets student grades from CVS File"""
+    fh = open("data.csv", "r")
+    data = fh.readline()
+    fh.close()
+
     student_grades = []
 
-    file = open("data.csv", "r")
-    for line in file:
-        clean = line.strip()
+    for line in data:
+        clean = line.strip(",")
         student_grades.append(clean)
-    file.close()
-
     return student_grades
-
