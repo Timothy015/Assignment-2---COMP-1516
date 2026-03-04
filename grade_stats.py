@@ -10,6 +10,8 @@ def calculate_summary_stats(student_grades):
     courses = []
     students = []
 
+    school_grades = {}
+
     index = 0
     while index < len(student_grades):
         student_data = student_grades[index].split(',')
@@ -17,6 +19,7 @@ def calculate_summary_stats(student_grades):
         school = student_data[0]
         course = student_data[1]
         student = student_data[2]
+        grade = float(student_data[3])
 
         if school not in schools:
             schools.append(school)
@@ -27,13 +30,27 @@ def calculate_summary_stats(student_grades):
         if student not in students:
             students.append(student)
 
+        if school not in students:
+            school_grades[school] = []
+        school_grades[school].append(grade)
+
         index += 1
 
     num_schools = len(schools)
     num_courses = len(courses)
     num_students = len(students)
 
-    return num_schools, num_courses, num_students
+    school_avg = {}
+    school_min = {}
+    school_max = {}
+
+    for school in school_grades:
+        grades = school_grades[school]
+        school_avg[school] = sum(grades)/len(grades)
+        school_min[school] = min(grades)
+        school_max[school] = max(grades)
+
+    return num_schools, schools, num_courses, num_students, school_avg, school_min, school_max
 
 
 def calculate_school_stats(school_name, student_grades):
