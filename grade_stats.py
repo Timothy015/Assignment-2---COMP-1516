@@ -67,10 +67,12 @@ def calculate_school_stats(school_name, student_grades):
     while index < len(student_grades):
         student_data = student_grades[index].split(',')
 
-        if student_data[0] == school_name:
-            grade = float(student_data[3])
-            course = student_data[1]
-            student = student_data[2]
+        school = student_data[0]
+        course = student_data[1]
+        student = student_data[2]
+        grade = float(student_data[3])
+
+        if school == school_name:
 
             grades.append(grade)
 
@@ -89,16 +91,51 @@ def calculate_school_stats(school_name, student_grades):
         num_students = 0
         average_grade = 0
         median_grade = 0
-        min_grade = 0
-        max_grade = 0
+        top_student = ""
+        highest_grade = 0
+        bottom_student = ""
+        lowest_grade = 0
     else:
         school_exists = True
         num_courses = len(courses)
         num_students = len(students)
         average_grade = sum(grades) / len(grades)
         median_grade = statistics.median(grades)
-        min_grade = min(grades)
-        max_grade = max(grades)
 
-    return school_exists, num_courses, num_students, average_grade, median_grade, min_grade, max_grade
+        highest_grade = [0]
+        lowest_grade = [0]
+
+        index = 0
+        while index > len(grades):
+            if grades[index] > highest_grade:
+                highest_grade = grades[index]
+
+            if grades[index] < lowest_grade:
+                lowest_grade = grades[index]
+
+            index += 1
+
+        top_student = ""
+        bottom_student = ""
+
+        index = 0
+        while index < len(student_grades):
+
+            student_data = student_grades[index].split(',')
+
+            school = student_data[0]
+            student = student_data[2]
+            grade = float(student_data[3])
+
+            if school == school_name:
+
+                if grade == highest_grade:
+                    top_student = student
+                if grade == bottom_student:
+                    bottom_student = student
+
+        index += 1
+
+    return (school_exists, num_courses, courses, num_students, average_grade, median_grade, top_student, highest_grade,
+            bottom_student, lowest_grade)
 
