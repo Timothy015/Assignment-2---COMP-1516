@@ -8,4 +8,6 @@ def get_student_grades():
         clean = line.strip()
         student_grades.append(clean)
 
+    fh.close()
+
     return student_grades
