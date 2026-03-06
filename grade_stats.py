@@ -73,12 +73,9 @@ def calculate_school_stats(school_name, student_grades):
         grade = float(student_data[3])
 
         if school == school_name:
-
             grades.append(grade)
-
             if course not in courses:
                 courses.append(course)
-
             if student not in students:
                 students.append(student)
 
@@ -102,17 +99,15 @@ def calculate_school_stats(school_name, student_grades):
         average_grade = sum(grades) / len(grades)
         median_grade = statistics.median(grades)
 
-        highest_grade = [0]
-        lowest_grade = [0]
+        highest_grade = grades[0]
+        lowest_grade = grades[0]
 
-        index = 0
-        while index > len(grades):
+        index = 1
+        while index < len(grades):
             if grades[index] > highest_grade:
                 highest_grade = grades[index]
-
             if grades[index] < lowest_grade:
                 lowest_grade = grades[index]
-
             index += 1
 
         top_student = ""
@@ -120,22 +115,17 @@ def calculate_school_stats(school_name, student_grades):
 
         index = 0
         while index < len(student_grades):
-
             student_data = student_grades[index].split(',')
-
             school = student_data[0]
             student = student_data[2]
             grade = float(student_data[3])
-
             if school == school_name:
-
-                if grade == highest_grade:
+                if grade == highest_grade and top_student == "":
                     top_student = student
-                if grade == bottom_student:
+                if grade == lowest_grade and bottom_student == "":
                     bottom_student = student
+            index += 1
 
-        index += 1
-
-    return (school_exists, num_courses, courses, num_students, average_grade, median_grade, top_student, highest_grade,
-            bottom_student, lowest_grade)
+    return (school_name, school_exists, num_courses, courses, num_students,
+            average_grade, median_grade, top_student, highest_grade, bottom_student, lowest_grade)
 
