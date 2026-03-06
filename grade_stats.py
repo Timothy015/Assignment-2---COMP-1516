@@ -30,8 +30,9 @@ def calculate_summary_stats(student_grades):
         if student not in students:
             students.append(student)
 
-        if school not in students:
+        if school not in school_grades:
             school_grades[school] = []
+
         school_grades[school].append(grade)
 
         index += 1
@@ -46,7 +47,8 @@ def calculate_summary_stats(student_grades):
 
     for school in school_grades:
         grades = school_grades[school]
-        school_avg[school] = sum(grades)/len(grades)
+
+        school_avg[school] = sum(grades) / len(grades)
         school_min[school] = min(grades)
         school_max[school] = max(grades)
 
@@ -65,6 +67,7 @@ def calculate_school_stats(school_name, student_grades):
 
     index = 0
     while index < len(student_grades):
+
         student_data = student_grades[index].split(',')
 
         school = student_data[0]
@@ -73,9 +76,12 @@ def calculate_school_stats(school_name, student_grades):
         grade = float(student_data[3])
 
         if school == school_name:
+
             grades.append(grade)
+
             if course not in courses:
                 courses.append(course)
+
             if student not in students:
                 students.append(student)
 
@@ -92,38 +98,39 @@ def calculate_school_stats(school_name, student_grades):
         highest_grade = 0
         bottom_student = ""
         lowest_grade = 0
+
     else:
+
         school_exists = True
         num_courses = len(courses)
         num_students = len(students)
+
         average_grade = sum(grades) / len(grades)
         median_grade = statistics.median(grades)
 
-        highest_grade = grades[0]
-        lowest_grade = grades[0]
-
-        index = 1
-        while index < len(grades):
-            if grades[index] > highest_grade:
-                highest_grade = grades[index]
-            if grades[index] < lowest_grade:
-                lowest_grade = grades[index]
-            index += 1
+        highest_grade = max(grades)
+        lowest_grade = min(grades)
 
         top_student = ""
         bottom_student = ""
 
         index = 0
         while index < len(student_grades):
+
             student_data = student_grades[index].split(',')
+
             school = student_data[0]
             student = student_data[2]
             grade = float(student_data[3])
+
             if school == school_name:
+
                 if grade == highest_grade and top_student == "":
                     top_student = student
+
                 if grade == lowest_grade and bottom_student == "":
                     bottom_student = student
+
             index += 1
 
     return (school_name, school_exists, num_courses, courses, num_students,
